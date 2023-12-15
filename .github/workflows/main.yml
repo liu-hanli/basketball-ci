@@ -38,9 +38,11 @@ jobs:
   qa:
     needs: test
     runs-on: self-hosted
+    continue-on-error: true # It is not so important having quality problems to stop the deployment
     steps:
       - name: calidad-codigo
-        run: echo "calidad-codigo"
+        run: |
+          mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin1
 
   deploy:
     needs: qa
