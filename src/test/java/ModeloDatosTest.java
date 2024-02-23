@@ -2,10 +2,8 @@ import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import javax.sql.DataSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +16,7 @@ public class ModeloDatosTest {
     private static final String TABLE = "Jugadores";
     private static final String XML_FILE = "jugadores.xml";
 
-    @Before
+    @BeforeAll
     public void setUp() throws Exception {
         IDatabaseTester databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD, TABLE);
         IDataSet dataSet = new FlatXmlDataSetBuilder().build(this.getClass()
