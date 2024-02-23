@@ -92,6 +92,24 @@ public class ModeloDatos {
         }
     }
 
+    public int getVotos(String nombre) {
+        int votos = 0;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT votos FROM Jugadores WHERE nombre " + " LIKE '%" + nombre + "%'");
+            while (rs.next()) {
+                votos = rs.getInt("votos");
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            // No lee de la tabla
+            logger.severe("No lee de la tabla");
+            logger.severe("El error es: " + e.getMessage());
+        }
+        return (votos);
+    }
+
     public void cerrarConexion() {
         try {
             con.close();
