@@ -79,6 +79,19 @@ public class ModeloDatos {
         }
     }
 
+    public void votosACero() {
+        try {
+            set = con.createStatement();
+            set.executeUpdate("UPDATE Jugadores SET votos=0");
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            // No modifica la tabla
+            logger.severe("No modifica la tabla");
+            logger.severe("El error es: " + e.getMessage());
+        }
+    }
+
     public void cerrarConexion() {
         try {
             con.close();
