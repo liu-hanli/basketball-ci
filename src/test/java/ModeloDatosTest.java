@@ -17,7 +17,7 @@ public class ModeloDatosTest {
     private static final String XML_FILE = "jugadores.xml";
 
     @BeforeAll
-    public void setUp() throws Exception {
+    public static void setUp() throws Exception {
         IDatabaseTester databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD, TABLE);
         IDataSet dataSet = new FlatXmlDataSetBuilder().build(this.getClass()
                 .getResourceAsStream(XML_FILE));

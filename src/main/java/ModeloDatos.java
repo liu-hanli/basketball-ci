@@ -98,7 +98,7 @@ public class ModeloDatos {
             set = con.createStatement();
             rs = set.executeQuery("SELECT votos FROM Jugadores WHERE nombre LIKE '%" + nombre + "%'");
             while (rs.next()) {
-                votos = rs.getInt(0);
+                votos = rs.getInt(1);
             }
             rs.close();
             set.close();
