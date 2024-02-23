@@ -38,7 +38,7 @@ jobs:
   qa:
     needs: test
     runs-on: self-hosted
-    continue-on-error: github.ref != 'refs/heads/main'
+    continue-on-error: ${{ github.ref != 'refs/heads/main' }}
     steps:
       - name: calidad-codigo
         run: |
