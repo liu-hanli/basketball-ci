@@ -3,25 +3,37 @@ import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileInputStream;
+import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModeloDatosTest {
-
-    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/baloncesto";
-    private static final String USER = "usuario";
-    private static final String PASSWORD = "clave";
-    private static final String TABLE = "Jugadores";
     private static final String XML_FILE = "jugadores.xml";
 
+    private static IDatabaseTester databaseTester;
+
     @BeforeAll
-    public static void setUp() throws Exception {
-        IDatabaseTester databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD, TABLE);
-        IDataSet dataSet = new FlatXmlDataSetBuilder().build(new FileInputStream(XML_FILE));
+    public static void setUpBeforeClass() throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        String dbHost = System.getenv().get("DATABASE_HOST");
+        String dbPort = System.getenv().get("DATABASE_PORT");
+        String dbName = System.getenv().get("DATABASE_NAME");
+        String dbUser = System.getenv().get("DATABASE_USER");
+        String dbPass = System.getenv().get("DATABASE_PASS");
+
+        String url = dbHost + ":" + dbPort + "/" + dbName;
+        // Initialize the database tester
+        databaseTester = new JdbcDatabaseTester("com.mysql.cj.jdbc.Driver", url, dbUser, dbPass);
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        // Load the dataset into the database
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(new File(XML_FILE));
         databaseTester.setDataSet(dataSet);
         databaseTester.onSetup();
     }
