@@ -19,7 +19,7 @@ public class ModeloDatosTest {
     @BeforeAll
     public static void setUp() throws Exception {
         IDatabaseTester databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD, TABLE);
-        IDataSet dataSet = new FlatXmlDataSetBuilder().build(this.getClass()
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(ModeloDatosTest.class
                 .getResourceAsStream(XML_FILE));
         databaseTester.setDataSet(dataSet);
         databaseTester.onSetup();
