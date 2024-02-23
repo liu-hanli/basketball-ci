@@ -5,6 +5,8 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileInputStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModeloDatosTest {
@@ -19,8 +21,7 @@ public class ModeloDatosTest {
     @BeforeAll
     public static void setUp() throws Exception {
         IDatabaseTester databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD, TABLE);
-        IDataSet dataSet = new FlatXmlDataSetBuilder().build(ModeloDatosTest.class
-                .getResourceAsStream(XML_FILE));
+        IDataSet dataSet = new FlatXmlDataSetBuilder().build(new FileInputStream(XML_FILE));
         databaseTester.setDataSet(dataSet);
         databaseTester.onSetup();
     }
