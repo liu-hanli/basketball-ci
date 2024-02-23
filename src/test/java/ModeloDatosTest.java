@@ -11,7 +11,7 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ModeloDatosTest {
-    private static final String XML_FILE = "jugadores.xml";
+    private static final String XML_FILE = "src/test/java/jugadores.xml";
 
     private static IDatabaseTester databaseTester;
 
