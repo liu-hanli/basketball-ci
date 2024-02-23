@@ -5,4 +5,5 @@ body {
 .resultado {
   color: yellow;
   background-color: darkred;
+  font-size: 10;
 }
