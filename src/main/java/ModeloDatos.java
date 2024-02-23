@@ -6,7 +6,7 @@ public class ModeloDatos {
     private Connection con;
     private Statement set;
     private ResultSet rs;
-    private Logger logger = Logger.getLogger("ModeloDatos");
+    private final Logger logger = Logger.getLogger("ModeloDatos");
 
     public void abrirConexion() {
 
@@ -96,9 +96,9 @@ public class ModeloDatos {
         int votos = 0;
         try {
             set = con.createStatement();
-            rs = set.executeQuery("SELECT votos FROM Jugadores WHERE nombre " + " LIKE '%" + nombre + "%'");
+            rs = set.executeQuery("SELECT votos FROM Jugadores WHERE nombre LIKE '%" + nombre + "%'");
             while (rs.next()) {
-                votos = rs.getInt("votos");
+                votos = rs.getInt(0);
             }
             rs.close();
             set.close();
