@@ -1,4 +1,8 @@
+import modelo.Jugador;
+
 import java.sql.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ModeloDatos {
 
@@ -75,6 +79,28 @@ public class ModeloDatos {
             System.out.println("No inserta en la tabla");
             System.out.println("El error es: " + e.getMessage());
         }
+    }
+
+    public List<Jugador> getJugadores() {
+        ArrayList<Jugador> jugadores = new ArrayList<>();
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM Jugadores;");
+            while (rs.next()) {
+                jugadores.add(new Jugador(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getInt("votos")
+                ));
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            // No lee de la tabla
+            System.out.println("No lee de la tabla");
+            System.out.println("El error es: " + e.getMessage());
+        }
+        return jugadores;
     }
 
     public void cerrarConexion() {
