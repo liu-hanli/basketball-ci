@@ -3,13 +3,30 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
     <servlet>
         <servlet-name>Acb</servlet-name>
         <servlet-class>Acb</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerVotos</servlet-name>
+        <servlet-class>VerVotos</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VotosCero</servlet-name>
+        <servlet-class>VotosCero</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Acb</servlet-name>
         <url-pattern>/Acb</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerVotos</servlet-name>
+        <url-pattern>/VerVotos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VotosCero</servlet-name>
+        <url-pattern>/VotosCero</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

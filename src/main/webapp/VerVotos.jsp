@@ -1,9 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> -->
 <%@ page import="java.util.List" %>
 <%@ page import="modelo.Jugador" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ver votos</title>
+    <title>Ver Votos</title>
     <link href="estilos.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="votaciones">
@@ -33,6 +34,6 @@
 </table>
 <br/>
 
-<a href="index.html">Volver a la p&aacute;gina principal</a>
+<a href="index.html" id="home">Volver a la p&aacute;gina principal</a>
 </body>
 </html>

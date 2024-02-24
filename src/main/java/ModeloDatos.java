@@ -105,7 +105,7 @@ public class ModeloDatos {
             logger.severe("No lee de la tabla");
             logger.severe("El error es: " + e.getMessage());
         }
-        return (votos);
+        return jugadores;
     }
 
     public void votosACero() {
