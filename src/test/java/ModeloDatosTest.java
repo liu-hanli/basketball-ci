@@ -1,41 +1,30 @@
-import org.dbunit.IDatabaseTester;
-import org.dbunit.JdbcDatabaseTester;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ModeloDatosTest {
-    private static final String XML_FILE = "src/test/java/jugadores.xml";
 
-    private static IDatabaseTester databaseTester;
+    public static Connection simulateConnection() throws Exception {
+        Connection connection = mock(Connection.class);
+        Statement statement = mock(Statement.class);
+        ResultSet resultSet = mock(ResultSet.class);
 
-    @BeforeAll
-    public static void setUpBeforeClass() throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        when(connection.createStatement()).thenReturn(statement);
+        when(statement.executeQuery(anyString())).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true).thenReturn(false).thenReturn(true).thenReturn(false);
+        when(resultSet.getInt(1)).thenReturn(0).thenReturn(1);
 
-        String dbHost = System.getenv().get("DATABASE_HOST");
-        String dbPort = System.getenv().get("DATABASE_PORT");
-        String dbName = System.getenv().get("DATABASE_NAME");
-        String dbUser = System.getenv().get("DATABASE_USER");
-        String dbPass = System.getenv().get("DATABASE_PASS");
-
-        String url = dbHost + ":" + dbPort + "/" + dbName;
-        // Initialize the database tester
-        databaseTester = new JdbcDatabaseTester("com.mysql.cj.jdbc.Driver", url, dbUser, dbPass);
-    }
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        // Load the dataset into the database
-        IDataSet dataSet = new FlatXmlDataSetBuilder().build(new File(XML_FILE));
-        databaseTester.setDataSet(dataSet);
-        databaseTester.onSetup();
+        return connection;
     }
 
     @Test
@@ -50,13 +39,15 @@ public class ModeloDatosTest {
     }
 
     @Test
-    public void testActualizarJugador() {
+    public void testActualizarJugador() throws Exception {
         System.out.println("Prueba de actualizarJugador");
         String nombre = "Rudy";
         ModeloDatos instance = new ModeloDatos();
+        instance.abrirConexion(simulateConnection());
         int votosAntes = instance.getVotos(nombre);
         instance.actualizarJugador(nombre);
         int votosDespues = instance.getVotos(nombre);
         assertEquals(votosAntes + 1, votosDespues);
+        System.out.println("Votos antes: " + votosAntes + ", votos después: " + votosDespues);
     }
 }

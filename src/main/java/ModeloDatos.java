@@ -30,6 +30,10 @@ public class ModeloDatos {
         }
     }
 
+    public void abrirConexion(Connection con) {
+        this.con = con;
+    }
+
     public boolean existeJugador(String nombre) {
         boolean existe = false;
         String cad;
