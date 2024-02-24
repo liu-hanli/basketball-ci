@@ -1,19 +1,19 @@
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="modelo.Jugador" %>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>Ver Votos</title>
     <link href="estilos.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="votaciones">
 <h1>Resultados de la votaci&oacute;n</h1>
-<% List<Jugador> jugadores = (List<Jugador>) session.getAttribute("jugadores");%>
+<% ArrayList<Jugador> jugadores = (ArrayList<Jugador>) session.getAttribute("jugadores");%>
 <table>
     <tr>
-        <th>Id</th>
-        <th>Jugador</th>
-        <th>Votos</th>
+        <th scope="col">Id</th>
+        <th scope="col">Jugador</th>
+        <th scope="col">Votos</th>
     </tr>
 
     <%

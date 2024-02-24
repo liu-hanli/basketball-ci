@@ -1,7 +1,6 @@
 import modelo.Jugador;
 
 import java.sql.*;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -87,7 +86,7 @@ public class ModeloDatos {
         }
     }
 
-    public List<Jugador> getJugadores() {
+    public ArrayList<Jugador> getJugadores() {
         ArrayList<Jugador> jugadores = new ArrayList<>();
         try {
             set = con.createStatement();

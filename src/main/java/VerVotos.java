@@ -1,7 +1,7 @@
 import modelo.Jugador;
 
 import java.io.*;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,7 +19,7 @@ public class VerVotos extends HttpServlet {
     @Override
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession s = req.getSession(true);
-        List<Jugador> jugadores = bd.getJugadores();
+        ArrayList<Jugador> jugadores = bd.getJugadores();
         s.setAttribute("jugadores", jugadores);
         res.sendRedirect(res.encodeRedirectURL("VerVotos.jsp"));
     }
