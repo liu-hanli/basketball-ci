@@ -94,7 +94,6 @@ public class PruebasPhantomjsIT {
         wait.until(ExpectedConditions.titleIs("Ver Votos"));
         WebElement votaciones = driver.findElement(By.tagName("table"));
         ArrayList<WebElement> rows = new ArrayList<>(votaciones.findElements(By.tagName("tr")));
-        rows.remove(0);
 
         boolean votoEncontrado = false;
         for (int i = 1; i < rows.size(); i++) {
