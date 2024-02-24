@@ -1,4 +1,7 @@
+import modelo.Jugador;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class ModeloDatos {
@@ -81,6 +84,27 @@ public class ModeloDatos {
             logger.severe("No inserta en la tabla");
             logger.severe("El error es: " + e.getMessage());
         }
+    }
+
+    public ArrayList<Jugador> getJugadores() {
+        ArrayList<Jugador> jugadores = new ArrayList<>();
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM Jugadores;");
+            while (rs.next()) {
+                jugadores.add(new Jugador(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getInt("votos")));
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            // No lee de la tabla
+            logger.severe("No lee de la tabla");
+            logger.severe("El error es: " + e.getMessage());
+        }
+        return jugadores;
     }
 
     public void votosACero() {
