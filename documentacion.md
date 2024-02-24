@@ -83,7 +83,7 @@ El Job `staging` se ejecuta como siguiente del job `qa`, pero continua aunque es
 
 Se hace sobre la rama `main`, que publica la aplicación en el App Service de Azure.
 
-Se ha cambiado el job de `qa` para que no continúe si falla para un push al rama `main`, y se ha añadido un nuevo job llamado `deploy` que hace el despliegue continuo.
+Se ha cambiado el job de `qa` para que no continúe si falla para un push al rama `main`, es decir, no procesa la entrega continua.
 
 ## Implementaciones
 
