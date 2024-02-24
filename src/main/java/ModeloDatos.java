@@ -1,10 +1,15 @@
+import modelo.Jugador;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class ModeloDatos {
 
     private Connection con;
     private Statement set;
     private ResultSet rs;
+    private final Logger logger = Logger.getLogger("ModeloDatos");
 
     public void abrirConexion() {
 
@@ -23,9 +28,13 @@ public class ModeloDatos {
 
         } catch (Exception e) {
             // No se ha conectado
-            System.out.println("No se ha podido conectar");
-            System.out.println("El error es: " + e.getMessage());
+            logger.severe("No se ha podido conectar");
+            logger.severe("El error es: " + e.getMessage());
         }
+    }
+
+    public void abrirConexion(Connection con) {
+        this.con = con;
     }
 
     public boolean existeJugador(String nombre) {
@@ -45,8 +54,8 @@ public class ModeloDatos {
             set.close();
         } catch (Exception e) {
             // No lee de la tabla
-            System.out.println("No lee de la tabla");
-            System.out.println("El error es: " + e.getMessage());
+            logger.severe("No lee de la tabla");
+            logger.severe("El error es: " + e.getMessage());
         }
         return (existe);
     }
@@ -59,8 +68,8 @@ public class ModeloDatos {
             set.close();
         } catch (Exception e) {
             // No modifica la tabla
-            System.out.println("No modifica la tabla");
-            System.out.println("El error es: " + e.getMessage());
+            logger.severe("No modifica la tabla");
+            logger.severe("El error es: " + e.getMessage());
         }
     }
 
@@ -72,16 +81,68 @@ public class ModeloDatos {
             set.close();
         } catch (Exception e) {
             // No inserta en la tabla
-            System.out.println("No inserta en la tabla");
-            System.out.println("El error es: " + e.getMessage());
+            logger.severe("No inserta en la tabla");
+            logger.severe("El error es: " + e.getMessage());
         }
+    }
+
+    public ArrayList<Jugador> getJugadores() {
+        ArrayList<Jugador> jugadores = new ArrayList<>();
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM Jugadores;");
+            while (rs.next()) {
+                jugadores.add(new Jugador(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getInt("votos")));
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            // No lee de la tabla
+            logger.severe("No lee de la tabla");
+            logger.severe("El error es: " + e.getMessage());
+        }
+        return jugadores;
+    }
+
+    public void votosACero() {
+        try {
+            set = con.createStatement();
+            set.executeUpdate("UPDATE Jugadores SET votos=0");
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            // No modifica la tabla
+            logger.severe("No modifica la tabla");
+            logger.severe("El error es: " + e.getMessage());
+        }
+    }
+
+    public int getVotos(String nombre) {
+        int votos = 0;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT votos FROM Jugadores WHERE nombre LIKE '%" + nombre + "%'");
+            while (rs.next()) {
+                votos = rs.getInt(1);
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            // No lee de la tabla
+            logger.severe("No lee de la tabla");
+            logger.severe("El error es: " + e.getMessage());
+        }
+        return (votos);
     }
 
     public void cerrarConexion() {
         try {
             con.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.severe(e.getMessage());
         }
     }
 
